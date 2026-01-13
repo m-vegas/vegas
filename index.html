@@ -3,44 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vegas+ 2.0.0 | Скоро доступен</title>
+    <title>Vegas+ 2.0.0 | Загрузка</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-green: #00ffaa;
+            --neon-purple: #9d00ff;
+            --dark-bg: #0a0a0f;
+            --darker-bg: #05050a;
+            --card-bg: rgba(15, 15, 30, 0.8);
+            --glow-pink: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff;
+            --glow-blue: 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 60px #00ffff;
+            --glow-green: 0 0 20px #00ffaa, 0 0 40px #00ffaa, 0 0 60px #00ffaa;
         }
         
         body {
-            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
-            color: #fff;
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Exo 2', sans-serif;
             min-height: 100vh;
             overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(157, 0, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 170, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 0, 255, 0.05) 0%, transparent 30%);
             position: relative;
         }
         
-        /* Анимированные частицы на фоне */
-        .particles {
+        /* Фоновые элементы */
+        .background-elements {
             position: absolute;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: 0;
+            overflow: hidden;
         }
         
-        .particle {
+        .floating-shape {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
+            background: radial-gradient(circle, var(--neon-pink), transparent);
+            opacity: 0.1;
+            filter: blur(40px);
+            animation: float 20s infinite linear;
         }
         
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            bottom: 10%;
+            right: 5%;
+            background: radial-gradient(circle, var(--neon-blue), transparent);
+            animation-delay: 5s;
+            animation-duration: 25s;
+        }
+        
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 80%;
+            background: radial-gradient(circle, var(--neon-green), transparent);
+            animation-delay: 10s;
+            animation-duration: 15s;
+        }
+        
+        /* Сетка */
+        .grid-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        
+        /* Контейнер */
         .container {
             position: relative;
-            z-index: 2;
-            max-width: 1200px;
+            z-index: 10;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -49,70 +113,135 @@
             text-align: center;
         }
         
-        .logo {
-            margin-bottom: 40px;
-            animation: pulse 3s infinite alternate;
+        /* Заголовок */
+        .header {
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
         }
         
-        .logo h1 {
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
             font-size: 4rem;
-            background: linear-gradient(90deg, #ff0080, #00d9ff);
+            color: var(--neon-pink);
+            margin-right: 20px;
+            text-shadow: var(--glow-pink);
+            animation: pulse 2s infinite alternate;
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            text-align: left;
+        }
+        
+        .logo-text h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-green));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             letter-spacing: 3px;
-            text-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+            line-height: 1;
         }
         
-        .logo h2 {
+        .logo-text h2 {
             font-size: 1.8rem;
-            color: #00d9ff;
-            margin-top: 10px;
-            font-weight: 300;
+            font-weight: 400;
+            color: var(--neon-blue);
             letter-spacing: 8px;
+            margin-top: 5px;
         }
         
-        .loading-section {
+        /* Карта загрузки */
+        .loading-card {
             width: 100%;
-            max-width: 800px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
+            max-width: 900px;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 50px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            margin-bottom: 40px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1.2s ease-out;
+            margin-bottom: 50px;
+        }
+        
+        .loading-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-green));
         }
         
         .loading-title {
-            font-size: 2.2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
             margin-bottom: 20px;
-            color: #ff0080;
+            color: var(--neon-green);
+            text-shadow: var(--glow-green);
         }
         
         .loading-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #a0a0a0;
+            font-size: 1.3rem;
+            margin-bottom: 50px;
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Прогресс бар */
+        .progress-wrapper {
+            margin-bottom: 40px;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+        }
+        
+        .progress-label {
+            color: var(--neon-blue);
+        }
+        
+        .progress-percent {
+            color: var(--neon-pink);
+            font-weight: bold;
         }
         
         .progress-container {
             width: 100%;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            margin-bottom: 30px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
             overflow: hidden;
             position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #ff0080, #00d9ff);
-            border-radius: 10px;
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-green));
+            border-radius: 12px;
+            transition: width 0.5s ease;
             position: relative;
             overflow: hidden;
         }
@@ -124,118 +253,156 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             animation: shimmer 2s infinite;
         }
         
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
+        /* Статус */
+        .status-container {
+            margin-bottom: 40px;
         }
         
-        .progress-text {
-            color: #00d9ff;
+        .status-text {
+            font-size: 1.4rem;
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            min-height: 32px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
         
-        .features {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        .feature {
-            flex: 1;
-            min-width: 200px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s, background 0.3s;
-        }
-        
-        .feature:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .feature i {
-            font-size: 2.5rem;
-            color: #00d9ff;
-            margin-bottom: 15px;
-        }
-        
-        .feature h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #ff0080;
-        }
-        
-        .feature p {
-            color: #a0a0a0;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        
-        .sound-control {
-            margin-top: 30px;
+        /* Звуковой контроллер */
+        .audio-controller {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px 25px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 20px;
+            background: rgba(10, 10, 20, 0.7);
+            padding: 20px 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
         }
         
-        .sound-btn {
-            background: linear-gradient(90deg, #ff0080, #00d9ff);
+        .audio-btn {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
+            padding: 15px 30px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
             font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 10px;
-            transition: transform 0.2s;
+            gap: 12px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
         }
         
-        .sound-btn:hover {
-            transform: scale(1.05);
+        .audio-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 255, 0.5);
         }
         
-        .sound-btn:active {
-            transform: scale(0.98);
+        .audio-btn:active {
+            transform: translateY(0);
         }
         
-        .sound-status {
-            color: #00d9ff;
-            font-size: 0.9rem;
+        .audio-status {
+            color: var(--neon-green);
+            font-size: 1.1rem;
+            font-weight: 600;
         }
         
+        /* Таймер */
         .countdown {
-            font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--neon-pink);
+            text-shadow: var(--glow-pink);
             margin-top: 30px;
-            color: #ff0080;
         }
         
+        /* Детали */
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .detail-item {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(20, 20, 40, 0.6);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .detail-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+        }
+        
+        .detail-icon {
+            font-size: 2.5rem;
+            color: var(--neon-pink);
+            margin-bottom: 15px;
+            text-shadow: var(--glow-pink);
+        }
+        
+        .detail-title {
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .detail-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        /* Футер */
         .footer {
-            margin-top: 40px;
-            color: #666;
+            margin-top: 60px;
+            color: rgba(255, 255, 255, 0.5);
             font-size: 0.9rem;
+            text-align: center;
+            animation: fadeIn 2s ease-out;
+        }
+        
+        .footer a {
+            color: var(--neon-green);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer a:hover {
+            color: var(--neon-pink);
+            text-decoration: underline;
         }
         
         /* Анимации */
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, 20px) rotate(90deg); }
+            50% { transform: translate(0, 40px) rotate(180deg); }
+            75% { transform: translate(-20px, 20px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
         @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
         }
         
         @keyframes shimmer {
@@ -243,226 +410,339 @@
             100% { transform: translateX(100%); }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
         /* Адаптивность */
+        @media (max-width: 992px) {
+            .logo-text h1 {
+                font-size: 3.5rem;
+            }
+            
+            .loading-card {
+                padding: 40px 30px;
+            }
+            
+            .loading-title {
+                font-size: 2.2rem;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .logo h1 {
-                font-size: 2.5rem;
+            .logo {
+                flex-direction: column;
+                text-align: center;
             }
             
-            .logo h2 {
-                font-size: 1.2rem;
-                letter-spacing: 4px;
+            .logo-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
             }
             
-            .loading-section {
-                padding: 25px;
+            .logo-text {
+                text-align: center;
+            }
+            
+            .logo-text h1 {
+                font-size: 2.8rem;
+            }
+            
+            .logo-text h2 {
+                font-size: 1.4rem;
+                letter-spacing: 5px;
             }
             
             .loading-title {
                 font-size: 1.8rem;
             }
             
-            .feature {
+            .loading-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .detail-item {
                 min-width: 100%;
+            }
+            
+            .audio-controller {
+                flex-direction: column;
+                gap: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Частицы на фоне -->
-    <div class="particles" id="particles"></div>
+    <!-- Фоновые элементы -->
+    <div class="background-elements">
+        <div class="grid-lines"></div>
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
     
     <!-- Основной контент -->
     <div class="container">
-        <div class="logo" style="animation: fadeIn 1s ease-out;">
-            <h1>VEGAS+</h1>
-            <h2>2.0.0</h2>
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>VEGAS+</h1>
+                    <h2>2.0.0</h2>
+                </div>
+            </div>
         </div>
         
-        <div class="loading-section" style="animation: fadeIn 1.2s ease-out;">
-            <h2 class="loading-title">Загрузка Vegas+ 2.0.0</h2>
-            <p class="loading-subtitle">Новый уникальный усовершенствованный Vegas+ уже скоро! Пока идет подготовка, насладитесь приветственным звуком и ознакомьтесь с новыми функциями.</p>
+        <div class="loading-card">
+            <h2 class="loading-title">ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ</h2>
+            <p class="loading-subtitle">Новый уникальный усовершенствованный Vegas+ 2.0.0 загружается. Подготовка к запуску самого продвинутого медиа-редактора нового поколения. Пожалуйста, ожидайте...</p>
             
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-wrapper">
+                <div class="progress-labels">
+                    <span class="progress-label">СТАТУС ЗАГРУЗКИ</span>
+                    <span class="progress-percent" id="progressPercent">0%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
             </div>
             
-            <div class="progress-info">
-                <span class="progress-text">Инициализация системы...</span>
-                <span class="progress-percent" id="progressPercent">0%</span>
+            <div class="status-container">
+                <div class="status-text" id="statusText">Инициализация ядра системы...</div>
             </div>
             
-            <div class="sound-control">
-                <button class="sound-btn" id="playSoundBtn">
-                    <i class="fas fa-play"></i> Воспроизвести приветствие
+            <div class="audio-controller">
+                <button class="audio-btn" id="audioBtn">
+                    <i class="fas fa-play" id="audioIcon"></i>
+                    <span id="audioText">ВОСПРОИЗВЕСТИ ПРИВЕТСТВИЕ</span>
                 </button>
-                <span class="sound-status" id="soundStatus">Звук готов к воспроизведению</span>
+                <div class="audio-status" id="audioStatus">Звуковая система готова</div>
             </div>
             
             <div class="countdown" id="countdown">
-                До запуска: <span id="timer">15</span> сек.
+                <span>АВТОМАТИЧЕСКИЙ ЗАПУСК ЧЕРЕЗ: </span>
+                <span id="countdownTimer">15</span>
+                <span> СЕКУНД</span>
             </div>
         </div>
         
-        <div class="features" style="animation: fadeIn 1.5s ease-out;">
-            <div class="feature">
-                <i class="fas fa-bolt"></i>
-                <h3>Быстрее на 40%</h3>
-                <p>Полностью переработанный движок для максимальной производительности даже на слабых устройствах.</p>
+        <div class="details">
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="detail-title">СВЕРХБЫСТРЫЙ ДВИЖОК</h3>
+                <p class="detail-text">Полностью переработанный движок обеспечивает скорость рендеринга на 65% выше предыдущей версии.</p>
             </div>
             
-            <div class="feature">
-                <i class="fas fa-palette"></i>
-                <h3>Новый интерфейс</h3>
-                <p>Современный дизайн с тёмной и светлой темой, кастомизацией и улучшенной навигацией.</p>
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="detail-title">ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ</h3>
+                <p class="detail-text">Интеллектуальная система автоматического монтажа и улучшения качества контента.</p>
             </div>
             
-            <div class="feature">
-                <i class="fas fa-magic"></i>
-                <h3>Умные функции</h3>
-                <p>Искусственный интеллект для автоматического подбора эффектов и улучшения качества.</p>
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h3 class="detail-title">НЕОГРАНИЧЕННЫЕ ВОЗМОЖНОСТИ</h3>
+                <p class="detail-text">Более 500 новых эффектов, переходов и инструментов для профессионального редактирования.</p>
             </div>
         </div>
         
-        <div class="footer" style="animation: fadeIn 2s ease-out;">
-            &copy; 2023 Vegas+ 2.0.0. Все права защищены. Ожидайте скорого запуска!
+        <div class="footer">
+            <p>&copy; 2023 VEGAS+ 2.0.0 REVOLUTIONARY EDITION. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
+            <p>Патентованная технология <span style="color: var(--neon-green);">NEXUS CORE</span> | Лицензионное соглашение | <a href="#" id="skipLink">Пропустить загрузку</a></p>
         </div>
     </div>
 
     <!-- Аудио элемент -->
-    <audio id="welcomeSound" preload="auto">
-        <!-- Здесь должен быть файл wel.mp3 -->
-        <!-- Для демонстрации используем заглушку -->
+    <audio id="welcomeAudio" preload="auto">
+        <!-- Замените src на ваш файл wel.mp3 -->
         <source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
         Ваш браузер не поддерживает аудио элемент.
     </audio>
 
     <script>
-        // Создание частиц на фоне
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Случайные размеры и позиции
-                const size = Math.random() * 5 + 1;
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                const delay = Math.random() * 20;
-                
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                particle.style.animationDelay = `${delay}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
-        // Симуляция прогресса загрузки
-        function simulateProgress() {
-            const progressBar = document.getElementById('progressBar');
-            const progressPercent = document.getElementById('progressPercent');
-            const progressText = document.querySelector('.progress-text');
-            const timerElement = document.getElementById('timer');
-            
-            let progress = 0;
-            let secondsLeft = 15;
-            
-            const progressMessages = [
-                "Инициализация системы...",
-                "Загрузка модулей...",
-                "Проверка лицензии...",
-                "Оптимизация кэша...",
-                "Подготовка интерфейса...",
-                "Загрузка завершена!"
-            ];
-            
-            const progressInterval = setInterval(() => {
-                // Обновляем прогресс
-                progress += Math.random() * 5 + 1;
-                if (progress > 100) progress = 100;
-                
-                progressBar.style.width = `${progress}%`;
-                progressPercent.textContent = `${Math.round(progress)}%`;
-                
-                // Обновляем сообщение каждые 20%
-                if (progress <= 100) {
-                    const messageIndex = Math.min(Math.floor(progress / 20), progressMessages.length - 1);
-                    progressText.textContent = progressMessages[messageIndex];
-                }
-                
-                // Обновляем таймер
-                secondsLeft--;
-                if (secondsLeft < 0) secondsLeft = 0;
-                timerElement.textContent = secondsLeft;
-                
-                // Завершаем загрузку
-                if (progress >= 100) {
-                    clearInterval(progressInterval);
-                    progressText.textContent = "Готово! Vegas+ 2.0.0 скоро запустится...";
-                    
-                    // Перенаправление на основную страницу после завершения
-                    setTimeout(() => {
-                        document.querySelector('.loading-title').textContent = "Vegas+ 2.0.0 Загружен!";
-                        document.querySelector('.loading-subtitle').textContent = "Новый Vegas+ готов к использованию. Сейчас вы будете перенаправлены...";
-                    }, 1000);
-                }
-            }, 300);
-        }
-        
-        // Управление аудио
-        function setupAudio() {
-            const welcomeSound = document.getElementById('welcomeSound');
-            const playSoundBtn = document.getElementById('playSoundBtn');
-            const soundStatus = document.getElementById('soundStatus');
-            const playIcon = playSoundBtn.querySelector('i');
-            
-            // Автоматическое воспроизведение при загрузке страницы (с задержкой)
-            setTimeout(() => {
-                welcomeSound.play().then(() => {
-                    soundStatus.textContent = "Приветственный звук воспроизводится";
-                    playIcon.className = "fas fa-pause";
-                }).catch(error => {
-                    soundStatus.textContent = "Нажмите кнопку для воспроизведения звука";
-                    console.log("Автовоспроизведение заблокировано, требуется взаимодействие с пользователем");
-                });
-            }, 1000);
-            
-            // Обработчик клика по кнопке
-            playSoundBtn.addEventListener('click', function() {
-                if (welcomeSound.paused) {
-                    welcomeSound.play();
-                    soundStatus.textContent = "Приветственный звук воспроизводится";
-                    playIcon.className = "fas fa-pause";
-                } else {
-                    welcomeSound.pause();
-                    soundStatus.textContent = "Звук приостановлен";
-                    playIcon.className = "fas fa-play";
-                }
-            });
-            
-            // Обновление статуса при окончании воспроизведения
-            welcomeSound.addEventListener('ended', function() {
-                soundStatus.textContent = "Приветственный звук завершен";
-                playIcon.className = "fas fa-play";
-            });
-        }
-        
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            simulateProgress();
-            setupAudio();
+            // Элементы
+            const progressBar = document.getElementById('progressBar');
+            const progressPercent = document.getElementById('progressPercent');
+            const statusText = document.getElementById('statusText');
+            const audioBtn = document.getElementById('audioBtn');
+            const audioIcon = document.getElementById('audioIcon');
+            const audioText = document.getElementById('audioText');
+            const audioStatus = document.getElementById('audioStatus');
+            const countdownTimer = document.getElementById('countdownTimer');
+            const welcomeAudio = document.getElementById('welcomeAudio');
+            const skipLink = document.getElementById('skipLink');
+            
+            // Состояние
+            let progress = 0;
+            let countdown = 15;
+            let isAudioPlaying = false;
+            
+            // Сообщения о статусе
+            const statusMessages = [
+                { text: "Инициализация ядра системы...", percent: 10 },
+                { text: "Загрузка графических модулей...", percent: 25 },
+                { text: "Подготовка AI-инструментов...", percent: 40 },
+                { text: "Оптимизация кэш-памяти...", percent: 55 },
+                { text: "Настройка аудио-движка...", percent: 70 },
+                { text: "Инициализация эффектов...", percent: 85 },
+                { text: "Загрузка завершена! Запуск Vegas+...", percent: 100 }
+            ];
+            
+            // Начать симуляцию загрузки
+            startLoadingSimulation();
+            
+            // Начать обратный отсчет
+            startCountdown();
+            
+            // Автовоспроизведение звука с небольшой задержкой
+            setTimeout(() => {
+                welcomeAudio.play().then(() => {
+                    isAudioPlaying = true;
+                    updateAudioUI();
+                    audioStatus.textContent = "Приветственный звук воспроизводится";
+                }).catch(error => {
+                    console.log("Автовоспроизведение заблокировано. Нажмите кнопку для запуска звука.");
+                    audioStatus.textContent = "Нажмите кнопку для воспроизведения звука";
+                });
+            }, 1500);
+            
+            // Обработчик кнопки аудио
+            audioBtn.addEventListener('click', function() {
+                if (welcomeAudio.paused) {
+                    welcomeAudio.play();
+                    isAudioPlaying = true;
+                } else {
+                    welcomeAudio.pause();
+                    isAudioPlaying = false;
+                }
+                updateAudioUI();
+            });
+            
+            // Обработчик окончания аудио
+            welcomeAudio.addEventListener('ended', function() {
+                isAudioPlaying = false;
+                updateAudioUI();
+                audioStatus.textContent = "Приветственный звук завершен";
+            });
+            
+            // Пропустить загрузку
+            skipLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                progress = 100;
+                countdown = 1;
+                updateProgress();
+                audioStatus.textContent = "Загрузка ускорена";
+            });
+            
+            // Функции
+            function startLoadingSimulation() {
+                const interval = setInterval(() => {
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        return;
+                    }
+                    
+                    // Увеличиваем прогресс
+                    progress += Math.random() * 3 + 1;
+                    if (progress > 100) progress = 100;
+                    
+                    // Обновляем прогресс бар
+                    updateProgress();
+                    
+                    // Обновляем сообщение о статусе
+                    updateStatusMessage();
+                    
+                }, 300);
+            }
+            
+            function startCountdown() {
+                const interval = setInterval(() => {
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        // Перенаправление на основной сайт
+                        redirectToMainSite();
+                        return;
+                    }
+                    
+                    countdown--;
+                    countdownTimer.textContent = countdown;
+                    
+                }, 1000);
+            }
+            
+            function updateProgress() {
+                progressBar.style.width = `${progress}%`;
+                progressPercent.textContent = `${Math.round(progress)}%`;
+            }
+            
+            function updateStatusMessage() {
+                for (let i = statusMessages.length - 1; i >= 0; i--) {
+                    if (progress >= statusMessages[i].percent) {
+                        statusText.textContent = statusMessages[i].text;
+                        break;
+                    }
+                }
+            }
+            
+            function updateAudioUI() {
+                if (isAudioPlaying) {
+                    audioIcon.className = "fas fa-pause";
+                    audioText.textContent = "ПАУЗА";
+                    audioBtn.style.background = "linear-gradient(135deg, var(--neon-blue), var(--neon-green))";
+                } else {
+                    audioIcon.className = "fas fa-play";
+                    audioText.textContent = "ВОСПРОИЗВЕСТИ";
+                    audioBtn.style.background = "linear-gradient(135deg, var(--neon-pink), var(--neon-purple))";
+                }
+            }
+            
+            function redirectToMainSite() {
+                statusText.textContent = "ПЕРЕНАПРАВЛЕНИЕ НА VEGAS+ 2.0.0...";
+                progressPercent.textContent = "100%";
+                
+                // Имитация перенаправления (замените на реальный URL)
+                setTimeout(() => {
+                    document.body.innerHTML = `
+                        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: #0a0a0f; color: white; font-family: 'Orbitron', sans-serif; flex-direction: column;">
+                            <h1 style="color: #00ffff; font-size: 3rem; margin-bottom: 20px;">VEGAS+ 2.0.0</h1>
+                            <p style="font-size: 1.5rem; margin-bottom: 30px;">ЗАГРУЗКА УСПЕШНО ЗАВЕРШЕНА</p>
+                            <div style="width: 100px; height: 100px; border: 5px solid #00ffaa; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                            <p style="margin-top: 30px; color: #ff00ff;">Перенаправление на основной интерфейс...</p>
+                        </div>
+                    `;
+                    
+                    // Через 3 секунды "перенаправляем" (в реальном случае здесь должен быть window.location.href)
+                    setTimeout(() => {
+                        alert("В реальном сценарии здесь произошло бы перенаправление на основной сайт Vegas+ 2.0.0");
+                    }, 3000);
+                }, 1000);
+            }
         });
     </script>
 </body>
